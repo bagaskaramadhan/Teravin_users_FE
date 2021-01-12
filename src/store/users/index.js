@@ -31,6 +31,24 @@ const actions = {
           reject(err)
         })
     })
+  },
+  createUser (context, payload) {
+    return new Promise((resolve, reject) => {
+      const fd = new FormData()
+      fd.append('name', payload.name)
+      fd.append('mobile', payload.mobile)
+      fd.append('email', payload.email)
+      fd.append('address', payload.address)
+      axios.post(`${URL}insert`, fd)
+        .then((result) => {
+          // console.log(result)
+          resolve(result)
+          window.location = '/'
+        })
+        .catch((err) => {
+          reject(err)
+        })
+    })
   }
 }
 

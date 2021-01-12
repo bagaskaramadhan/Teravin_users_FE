@@ -13,13 +13,35 @@
       title="Create User"
       class="text-center"
     >
-      <form>
-        <b-form-input type="text" placeholder="Nama" class="mb-3" />
-        <b-form-input type="number" placeholder="No. Tlp" class="mb-3" />
-        <b-form-input type="email" placeholder="Email" class="mb-3" />
-        <b-form-textarea size="sm" placeholder="Address" class="mb-3"/>
+      <form @submit.prevent="formCreateActions">
+        <b-form-input
+          type="text"
+          placeholder="Nama"
+          class="mb-3"
+          v-model="input.name"
+        />
+        <b-form-input
+          type="number"
+          placeholder="No. Tlp"
+          class="mb-3"
+          v-model="input.mobile"
+        />
+        <b-form-input
+          type="text"
+          placeholder="Email"
+          class="mb-3"
+          v-model="input.email"
+        />
+        <b-form-textarea
+          size="sm"
+          placeholder="Address"
+          class="mb-3"
+          v-model="input.address"
+        />
         <div class="d-flex justify-content-around">
-          <b-button variant="success" type="submit">Create</b-button>
+          <b-button variant="success" type="submit" @click="buttonCreate()"
+            >Create</b-button
+          >
         </div>
       </form>
     </b-modal>
@@ -27,49 +49,31 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions } from 'vuex'
 export default {
   data () {
     return {
       input: {
-        product_name: null,
-        product_category: null,
-        stock: null,
-        price: null,
-        image: null
+        name: null,
+        mobile: null,
+        email: null,
+        address: null
       }
     }
   },
-  computed: {
-    ...mapGetters({
-      categoryGetters: 'product/getAllCategory'
-    })
-  },
   methods: {
     ...mapActions({
-      categoryActions: 'product/getCategory',
-      formInsertActions: 'product/insertProduct'
+      formCreateActions: 'users/createUser'
     }),
-    buttonInsert () {
-      this.input.image = this.image
-      this.formInsertActions(this.input)
+    buttonCreate () {
+      this.formCreateActions(this.input)
         .then(() => {
-          // this.productActions()
           this.$refs['hide-Modal'].hide()
         })
         .catch((err) => {
           console.log(err)
         })
-    },
-    processFile (event) {
-      this.image = event.target.files[0]
-    },
-    buttonCancel () {
-      this.$refs['hide-Modal'].hide()
     }
-  },
-  mounted () {
-    this.categoryActions()
   }
 }
 </script>
