@@ -32,7 +32,7 @@ const actions = {
         })
     })
   },
-  insertProduct (context, payload) {
+  insertUser (context, payload) {
     return new Promise((resolve, reject) => {
       const fd = new FormData()
       fd.append('name', payload.name)
@@ -41,8 +41,8 @@ const actions = {
       fd.append('address', payload.address)
       axios.post(`${URL}/users/api/insert`, fd)
         .then((result) => {
-          console.log(result.data)
-          // resolve(result.data.data)
+          // console.log(result.data.message)
+          resolve(result.data.message)
           // window.location = '/'
         })
         .catch((err) => {
