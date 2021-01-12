@@ -26,7 +26,9 @@
             <b-card-text>{{ users.mobile }}</b-card-text>
             <b-card-text>{{ users.address }}</b-card-text>
             <b-button variant="outline-warning" class="mr-5">Edit</b-button>
-            <b-button variant="outline-danger" class="ml-5">Delete</b-button>
+            <b-button variant="danger" @click="deleteUser(users.id)"
+              >Delete</b-button
+            >
           </b-card>
         </div>
       </div>
@@ -51,8 +53,15 @@ export default {
   },
   methods: {
     ...mapActions({
-      usersActions: 'users/getUsers'
-    })
+      usersActions: 'users/getUsers',
+      deleteActions: 'users/deleteUser'
+    }),
+    deleteUser (id) {
+      // alert(id)
+      this.deleteActions(id).then(() => {
+        this.usersActions()
+      })
+    }
   },
   mounted () {
     this.usersActions()
@@ -65,7 +74,7 @@ export default {
   margin-left: 50px;
   margin-top: 30px;
 }
-.style-Card{
+.style-Card {
   margin-top: 20%;
 }
 </style>

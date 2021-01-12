@@ -49,6 +49,18 @@ const actions = {
           reject(err)
         })
     })
+  },
+  deleteUser (context, payload) {
+    return new Promise((resolve, reject) => {
+      axios.delete(`${URL}/users/api/delete/${payload}`)
+        .then((result) => {
+          resolve(result)
+          // console.log(result.data)
+        })
+        .catch((err) => {
+          reject(err)
+        })
+    })
   }
 }
 
