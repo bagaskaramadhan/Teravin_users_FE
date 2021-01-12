@@ -22,7 +22,7 @@ const mutations = {
 const actions = {
   getUsers (context) {
     return new Promise((resolve, reject) => {
-      axios.get(`${URL}getall`)
+      axios.get(`${URL}/users/api/getall`)
         .then((response) => {
           context.commit('SET_ALL_USERS', response.data.data)
           resolve()
@@ -32,18 +32,18 @@ const actions = {
         })
     })
   },
-  createUser (context, payload) {
+  insertProduct (context, payload) {
     return new Promise((resolve, reject) => {
       const fd = new FormData()
       fd.append('name', payload.name)
       fd.append('mobile', payload.mobile)
       fd.append('email', payload.email)
       fd.append('address', payload.address)
-      axios.post(`${URL}insert`, fd)
+      axios.post(`${URL}/users/api/insert`, fd)
         .then((result) => {
-          // console.log(result)
-          resolve(result)
-          window.location = '/'
+          console.log(result.data)
+          // resolve(result.data.data)
+          // window.location = '/'
         })
         .catch((err) => {
           reject(err)
