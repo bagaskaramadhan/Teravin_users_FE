@@ -11,8 +11,21 @@
       </div>
     </div>
     <div v-else>
-      <div>
+      <div class="m-3">
         <CreateModal />
+      </div>
+      <div class="searchInput">
+        <form v-on:submit.prevent="">
+          <input
+            type="text"
+            name="search"
+            @keyup="getSearch(search)"
+            v-model="search"
+            id="search"
+            class="form-control"
+            placeholder="Search ..."
+          />
+        </form>
       </div>
       <div class="row no-gutters">
         <div
@@ -21,10 +34,10 @@
           class="column align-center"
         >
           <b-card>
-            <b-card-text>{{ users.name }}</b-card-text>
-            <b-card-text>{{ users.email }}</b-card-text>
-            <b-card-text>{{ users.mobile }}</b-card-text>
-            <b-card-text>{{ users.address }}</b-card-text>
+            <b-card-text>Nama: {{ users.name }}</b-card-text>
+            <b-card-text>Email: {{ users.email }}</b-card-text>
+            <b-card-text>Telepon: {{ users.mobile }}</b-card-text>
+            <b-card-text>Alamat: {{ users.address }}</b-card-text>
             <b-button variant="outline-warning" class="mr-5">Edit</b-button>
             <b-button variant="danger" @click="deleteUser(users.id)"
               >Delete</b-button
@@ -41,7 +54,9 @@ import { mapGetters, mapActions } from 'vuex'
 import CreateModal from '../components/CreateModal'
 export default {
   data () {
-    return {}
+    return {
+      search: ''
+    }
   },
   components: {
     CreateModal
@@ -54,13 +69,21 @@ export default {
   methods: {
     ...mapActions({
       usersActions: 'users/getUsers',
-      deleteActions: 'users/deleteUser'
+      deleteActions: 'users/deleteUser',
+      searchActions: 'users/searchData'
     }),
     deleteUser (id) {
       // alert(id)
       this.deleteActions(id).then(() => {
         this.usersActions()
       })
+    },
+    getSearch () {
+      this.$router.push({
+        path: '/',
+        query: { search: this.search }
+      })
+      this.searchActions(this.search)
     }
   },
   mounted () {
@@ -70,6 +93,10 @@ export default {
 </script>
 
 <style scoped>
+.searchInput{
+  padding-right: 65%;
+  margin-left: 45px;
+}
 .align-center {
   margin-left: 50px;
   margin-top: 30px;

@@ -61,6 +61,18 @@ const actions = {
           reject(err)
         })
     })
+  },
+  searchData (context, payload) {
+    return new Promise((resolve, reject) => {
+      axios.get(`${URL}/users/api/getall?name=${payload}`)
+        .then((response) => {
+          resolve()
+          context.commit('SET_ALL_USERS', response.data.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    })
   }
 }
 

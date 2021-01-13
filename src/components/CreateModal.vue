@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img src="../assets/AddUsers.svg" v-b-modal.modal-1 />
+    <img class="imgStyle" src="../assets/AddUsers.svg" v-b-modal.modal-1 />
     <b-modal id="modal-1" title="Create User" hide-footer>
       <form v-on:submit.prevent="onSubmit()">
         <b-form-input
@@ -87,3 +87,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.imgStyle {
+  margin-left: 30px;
+}
+</style>
