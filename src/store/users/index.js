@@ -3,19 +3,26 @@ import { URL } from '../../helpers/env'
 
 const state = () => {
   return {
-    users: []
+    users: [],
+    detail: []
   }
 }
 
 const getters = {
   getAllUser (state) {
     return state.users
+  },
+  getIdUser (state) {
+    return state.detail
   }
 }
 
 const mutations = {
   SET_ALL_USERS (state, payload) {
     state.users = payload
+  },
+  SET_ID_USERS (state, payload) {
+    state.detail = payload
   }
 }
 
@@ -71,6 +78,38 @@ const actions = {
         })
         .catch((err) => {
           console.log(err)
+        })
+    })
+  },
+  getDetail (context, payload) {
+    return new Promise((resolve, reject) => {
+      axios.get(`${URL}/users/api/getbyid/${payload}`)
+        .then((result) => {
+          context.commit('SET_ID_USERS', result.data.data)
+          resolve(result.data.data)
+          // console.log(result)
+        })
+        .catch((err) => {
+          reject(err)
+        })
+    })
+  },
+  updateUser (context, payload) {
+    return new Promise((resolve, reject) => {
+      const fd = new FormData()
+      fd.append('name', payload.name)
+      fd.append('mobile', payload.mobile)
+      fd.append('email', payload.email)
+      fd.append('address', payload.address)
+      axios.patch(`${URL}/users/api/update/${payload.id}`, fd)
+        .then((result) => {
+          // console.log(result)
+          // alert(result)
+          resolve(result.data)
+          // resolve(result.data.message)
+        }).catch((err) => {
+          console.log(err)
+          reject(err)
         })
     })
   }
