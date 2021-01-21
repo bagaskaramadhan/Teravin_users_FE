@@ -4,7 +4,7 @@
       <div>
         <b-card class="text-center style-Card">
           <div class="bg-secondary text-light">
-            There's Currently No Data Exists Please Create by Clicking the
+            There's Currently No Data Exists Please Create by Clicking
             <CreateModal />
           </div>
         </b-card>
